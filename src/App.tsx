@@ -4,6 +4,7 @@ import {
   Navigate,
   Routes,
   Route,
+  Link,
 } from 'react-router-dom';
 
 import Products from './ProjectTwo';
@@ -25,6 +26,14 @@ function App() {
     <div className="App">
       <UserStateContext.Provider value={{ ...value, setValue: setValue }}>
         <Router>
+          <ul className="menu">
+            <li>
+              <Link to="/">Project One</Link>
+            </li>
+            <li>
+              <Link to="/products">Project Two</Link>
+            </li>
+          </ul>
           <Routes>
             <Route path="/" element={<Navigate to="/users/step-one" />} />
 
