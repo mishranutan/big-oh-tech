@@ -1,24 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Routes,
+  Route,
+} from 'react-router-dom';
+
+import Products from './ProjectTwo';
+import UserInfo from './ProjectOne/UserInfo';
+import FamilyMembers from './ProjectOne/AddFamily';
+import ActiveForm from './ProjectOne/ActiveForm';
+import Details from './ProjectOne/Details';
+import {
+  UserStateContext,
+  defaultContextValue,
+  UserContext,
+} from './ProjectOne/context';
 import './App.css';
 
 function App() {
+  const [value, setValue] = useState<UserContext>(defaultContextValue);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <UserStateContext.Provider value={{ ...value, setValue: setValue }}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Navigate to="/users/step-one" />} />
+
+            <Route path="/users" element={<ActiveForm />}>
+              <Route path="step-one" element={<UserInfo />} />
+              <Route path="step-two" element={<FamilyMembers />} />
+              <Route path="step-three" element={<Details />} />
+            </Route>
+            <Route path="/products" element={<Products />} />
+          </Routes>
+        </Router>
+      </UserStateContext.Provider>
     </div>
   );
 }
